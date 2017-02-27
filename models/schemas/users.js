@@ -1,4 +1,6 @@
 var mongoose = require('mongoose');
+//mongoose.Promise = global.Promise;
+mongoose.Promise = require('bluebird');
 var Schema = mongoose.Schema;
 
 var  userSchema =  new Schema({
@@ -29,12 +31,12 @@ userSchema.pre('save', function(callback){
       return callback(new Error('Missing Email'));
     if(!this.hash)
       return callback( new Error('Missing password'));
-    if(!this.companyName)
-      return callback(new Error('Missing Company '));
+//    if(!this.companyName)
+//      return callback(new Error('Missing Company '));
   }
   else {
-    if (!this.phone)
-      return callback(new Error('Missing Phone'));
+  //  if (!this.phone)
+  //    return callback(new Error('Missing Phone'));
   }
   
   callback();

@@ -8,6 +8,8 @@ const config = require('./models/config');
 const users = require('./controllers/users')
 
 var app = express();
+mongoose.Promise = require('bluebird');
+mongoose.connect('localhost:15123');
 
 if(app.get('env')!== 'production') {
   app.use(logger('dev'));
@@ -17,9 +19,10 @@ if(app.get('env')!== 'production') {
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
-//users = [];
-
-app.get('/users', users.createUser);
+//Routes
+app.get('/users', users.getUsers);
+app.get('/users/:id', users.getUserByID);
+app.post('/users', users.createUser);
 
 //handle 404
 app.use(function(req, res, next){
