@@ -1,14 +1,13 @@
 var mongoose = require('mongoose');
-//mongoose.Promise = global.Promise;
 mongoose.Promise = require('bluebird');
 var Schema = mongoose.Schema;
 
 var  userSchema =  new Schema({
-  firstName: {type:String, trim:true},
-  lastName: {type:String, trim:true},
+  firstName: {type: String, trim: true},
+  lastName: {type: String, trim: true},
   classYear: Number,
-  email: {type:String, unique: true, sparse:true, trim:true},
-  phone: {type: String, unique: true, sparse:true, trim:true},
+  email: {type: String, unique: true, sparse: true, trim: true},
+  phone: {type: String, unique: true, sparse: true, trim: true},
   interests: [Number],
   isAdmin: {type: Boolean, index: true},
   isSuperAdmin: {type: Boolean, index: true},
@@ -27,18 +26,16 @@ var  userSchema =  new Schema({
 
 userSchema.pre('save', function(callback){
   if (this.isAdmin || this.isSuperAdmin) {
-    if(!this.email)
+    if (!this.email)
       return callback(new Error('Missing Email'));
-    if(!this.hash)
-      return callback( new Error('Missing password'));
-//    if(!this.companyName)
-//      return callback(new Error('Missing Company '));
+    if (!this.hash)
+      return callback(new Error('Missing Password'));
+    if (!this.companyName)
+      return callback(new Error('Missing Company Name'));
   }
   else {
-  //  if (!this.phone)
-  //    return callback(new Error('Missing Phone'));
+    //TODO: Do this part later when working on frontend.
   }
-  
   callback();
 });
 
