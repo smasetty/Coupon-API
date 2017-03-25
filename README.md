@@ -6,6 +6,8 @@ I will keep updating this space with more details as I near the end of the proje
 Technologies span the following:
 
 Backend:
+Bcrypt
+JWT
 JS
 Express
 Node
