@@ -1,8 +1,26 @@
 var modal = document.getElementById('js-success');
-var form = document.getElementById('js-signup-form');
+//var form = document.getElementById('js-signup-form');
+var form = document.forms[0];
  
 window.onclick = function(event) {
   if(event.target === modal) modal.style.display = 'none';
+}
+
+function submitLogin() {
+  var errorMessage = '';
+
+  if (!form.email.value) {
+    error(form.email);
+    errorMessage += 'Missing email!';
+  }
+
+  if (!form.password.value) {
+    error(form.password);
+    if (errorMessage) errorMessage +='<br />';
+    errorMessage += 'Missing Password!!';
+  }
+  
+  if (errorMessage) return displayMessage(errorMessage);
 }
 
 function submitForm() {

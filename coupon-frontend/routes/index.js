@@ -8,4 +8,9 @@ router.get('/', function(req, res , next){
   //res.send("hello world for now")
 });
 
+router.get('/login', function(req, res, next) {
+  console.log('Attemping to Login a User');
+  res.render('login');
+});
+
 module.exports = router;
