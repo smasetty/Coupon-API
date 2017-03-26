@@ -5,7 +5,8 @@ const logger = require('morgan');
 const bodyParser = require('body-parser');
 
 const config = require('./models/config');
-const users = require('./controllers/users')
+const users = require('./controllers/users');
+const admin = require('./controllers/admin');
 const coupons = require('./controllers/coupons');
 const auth = require('./controllers/auth');
 
@@ -26,13 +27,15 @@ app.param('id', function(req, res, next, id) {
   if (!id.match(/^[0-9a-fA-F]{24}$/))
     return res.status(400).send('Invalid ID');
   next();
-});
+}); 
 
 //Users MiddleWare
 app.get('/users', users.getUsers);
 app.get('/users/:id', users.getUserByID);
 app.post('/users', users.createUser);
 app.delete('/users/:id', users.deleteUsersByID);
+
+app.post('/admins', admin.createAdmin);
 
 //Coupons MiddleWare
 app.get('/coupons', coupons.getAllCoupons);

@@ -27,9 +27,7 @@ var  userSchema =  new Schema({
 ); 
 
 userSchema.pre('save', function(callback){
-    console.log(this);
     if(this.isAdmin || this.isSuperAdmin) {
-        console.log('This is a Super Admin');
         if (!this.email)
             return callback(new Error('Missing Email'));
         if (!this.hash)
