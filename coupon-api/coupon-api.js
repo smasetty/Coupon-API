@@ -7,6 +7,7 @@ const bodyParser = require('body-parser');
 const config = require('./models/config');
 const users = require('./controllers/users')
 const coupons = require('./controllers/coupons');
+const auth = require('./controllers/auth');
 
 var app = express();
 var router = express.Router();
@@ -31,6 +32,7 @@ app.param('id', function(req, res, next, id) {
 app.get('/users', users.getUsers);
 app.get('/users/:id', users.getUserByID);
 app.post('/users', users.createUser);
+app.delete('/users/:id', users.deleteUsersByID);
 
 //Coupons MiddleWare
 app.get('/coupons', coupons.getAllCoupons);
@@ -38,6 +40,9 @@ app.get('/coupons/:id', coupons.getCouponById);
 app.post('/coupons', coupons.createCoupon);
 app.put('/coupons/:id', coupons.updateCoupon);
 app.delete('/coupons/:id', coupons.deleteCouponById);
+
+app.post('/auth/token', auth.loginUser);
+
 
 //handle 404
 app.use(function(req, res, next){

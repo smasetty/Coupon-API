@@ -9,6 +9,7 @@ var  userSchema =  new Schema({
   classYear: {type: Number},
   email: {type: String, unique: true, sparse: true, trim: true},
   phone: {type: String, unique: true, sparse: true},
+  phoneProvider: {type: String, trim: true},
   interests: [Number],
   isAdmin: {type: Boolean, index: true},
   isSuperAdmin: {type: Boolean, index: true},
@@ -26,7 +27,9 @@ var  userSchema =  new Schema({
 ); 
 
 userSchema.pre('save', function(callback){
+    console.log(this);
     if(this.isAdmin || this.isSuperAdmin) {
+        console.log('This is a Super Admin');
         if (!this.email)
             return callback(new Error('Missing Email'));
         if (!this.hash)
