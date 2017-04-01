@@ -20,6 +20,7 @@ if(app.get('env')!== 'production') {
   app.use(logger('dev'));
   var dev = true;
 } 
+require('./init/init');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
@@ -29,6 +30,12 @@ app.param('id', function(req, res, next, id) {
     return res.status(400).send('Invalid ID');
   next();
 }); 
+
+app.param('phone', function(req, res, next, phone) {
+    if (!(+phone) || phone.length != 10)
+        return res.status(400).send('Invalid Phone provided');
+    next();
+});
 
 //Users MiddleWare
 app.get('/users', users.getUsers);

@@ -5,6 +5,12 @@ module.exports = {
     secret: 'ThisIsDefinetlyNotTheSecret',
     dbUrl: 'localhost:15123',
 
+    // mail options, also uses for init script to create first superAdmin
+    // Gmail has a limit of 500 recipients a day
+    emailFromName: 'HSA Coupons',
+    emailFromAddress: 'sharat_masetty@yahoo.com',
+    emailPassword: 'couponswoo',
+    
     providers: [
         {
             name: 'altel',
