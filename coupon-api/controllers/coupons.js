@@ -35,16 +35,22 @@ module.exports.getUnapprovedCoupons = function(req, res, next) {
 
 module.exports.getCouponById = function(req, res , next) {
   Coupon.findById(req.params.id, function(err, coupon){
-    if (err) return next(err);
-    if(!coupon) return res.status(404).sendStatus("No Coupon with that ID");
-    res.json(coupon);
+      if (err)  return next(err);
+       
+      if(!coupon) {
+          console.log('There is no Coupon with that ID');
+          //return res.sendStatus(200);
+          return res.status(404).send("No Coupon with that ID");
+      }
+      res.json(coupon);
   });
 };
 
 module.exports.approveCoupon  = function(req, res, next) {
   Coupon.findById(req.param.id, function(err, coupon) {
+    if (err) return next(err);
     if(!coupon)
-      return res.status(404).sendStatus("No Coupon with that ID");
+      return res.status(404).send("No Coupon with that ID");
     if(coupon.approvedDate) return;
     coupon.approvedDate = new Date();
     coupon.save();

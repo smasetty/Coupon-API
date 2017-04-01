@@ -10,10 +10,11 @@ const admin = require('./controllers/admin');
 const coupons = require('./controllers/coupons');
 const auth = require('./controllers/auth');
 
+mongoose.Promise = require('bluebird');
+mongoose.connect(config.dbUrl, {server: {socketOptions: {keepAlive: 120}}});
+
 var app = express();
 var router = express.Router();
-mongoose.Promise = require('bluebird');
-mongoose.connect('localhost:15123');
 
 if(app.get('env')!== 'production') {
   app.use(logger('dev'));

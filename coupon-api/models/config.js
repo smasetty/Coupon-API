@@ -1,8 +1,9 @@
 module.exports = {
-    port: 3000,
+    port: 3005,
 
     //secret for creating tokens
     secret: 'ThisIsDefinetlyNotTheSecret',
+    dbUrl: 'localhost:15123',
 
     providers: [
         {

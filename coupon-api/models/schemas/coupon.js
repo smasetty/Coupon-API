@@ -31,6 +31,7 @@ couponSchema.pre('save', function(callback){
   //update start date on approval
   if (this.isModified(approvedDate) && this.approvedDate > this.startDate)
     this.startDate = this.approvedDate;
+
   callback();
 });
 
