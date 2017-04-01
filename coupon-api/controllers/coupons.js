@@ -20,7 +20,7 @@ module.exports.getActiveCoupons = function(req, res, next) {
           {endDate: {$exists: false}},
         ]}
     ]
-  }, function(err, next){
+  }, function(err, coupons, next){
     if(err) return next(err);
     res.json(coupons);
   });
