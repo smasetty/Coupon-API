@@ -45,11 +45,9 @@ module.exports.adminRequired = function(req, res, next) {
     validateToken(req, res, next, {adminRequired: true});
 };
 
-
 module.exports.superAdminRequired = function(req, res, next) {
     validateToken(req, res, next, {superAdminRequired: true});
 };
-
 
 function validateToken(req, res, next, c) {
     var token = req.body.token || req.query.token || req.headers['x-access-token'];
@@ -71,14 +69,14 @@ function validateToken(req, res, next, c) {
 
         if (decoded.isAdmin !== user.isAdmin || decoded.isSuperAdmin !== user.isSuperAdmin)
             return res.status(403).send('Expired Token');
-    });
     
-    if (!user.isAdmin && !user.isSuperAdmin && c.adminRequired)
-        return res.status(403).send('Admin priviliges required');
-    if (!user.isSuperAdmin && c.superAdminRequired)
-        return res.status(403).send('Super Admin Priviliges required');
-    
-    req.user = decoded;
+        if (!user.isAdmin && !user.isSuperAdmin && c.adminRequired)
+            return res.status(403).send('Admin priviliges required');
+        if (!user.isSuperAdmin && c.superAdminRequired)
+            return res.status(403).send('Super Admin Priviliges required');
 
-    next();
+        req.user = decoded;
+
+        next();
+    });
 };

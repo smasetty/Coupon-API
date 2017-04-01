@@ -24,36 +24,48 @@ require('./init/init');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
+app.use(express.static(path.join(__dirname, 'public')));
 
-app.param('id', function(req, res, next, id) {
+router.param('id', function(req, res, next, id) {
   if (!id.match(/^[0-9a-fA-F]{24}$/))
     return res.status(400).send('Invalid ID');
   next();
 }); 
 
-app.param('phone', function(req, res, next, phone) {
+router.param('phone', function(req, res, next, phone) {
     if (!(+phone) || phone.length != 10)
         return res.status(400).send('Invalid Phone provided');
     next();
 });
 
-//Users MiddleWare
-app.get('/users', users.getUsers);
-app.get('/users/:id', users.getUserByID);
-app.post('/users', users.createUser);
-app.delete('/users/:id', users.deleteUsersByID);
+router.route('/users')
+    .get(auth.superAdminRequired, users.getUsers)
+    .post(users.createUser);
+router.route('/users/:id')
+    .get(auth.superAdminRequired, users.getUserByID)
+    .put(users.updateUser)
+    .delete(users.deleteUsersByID);
+router.route('/users/:phone')
+    .delete(users.deleteUserByPhone);
 
-app.post('/admins', admin.createAdmin);
+router.route('/coupons')
+    .get(coupons.getActiveCoupons)
+    .post(auth.adminRequired, coupons.createCoupon);
+router.route('/coupons/:id')
+    .get(coupons.getCouponById)
+    .post(auth.superAdminRequired, coupons.approveCoupon)
+    .put(auth.adminRequired, coupons.updateCoupon)
+    .delete(auth.adminRequired, coupons.deleteCouponById);
 
-//Coupons MiddleWare
-app.get('/coupons', coupons.getAllCoupons);
-app.get('/coupons/:id', coupons.getCouponById);
-app.post('/coupons', coupons.createCoupon);
-app.put('/coupons/:id', coupons.updateCoupon);
-app.delete('/coupons/:id', coupons.deleteCouponById);
+router.route('/admins')
+    .post(auth.superAdminRequired, admin.createAdmin);
+router.route('/admins/coupons')
+    .get(auth.superAdminRequired, coupons.getUnapprovedCoupons);
 
-app.post('/auth/token', auth.loginUser);
+router.route('/auth/token')
+    .post(auth.loginUser);
 
+app.use('/', router);
 
 //handle 404
 app.use(function(req, res, next){
