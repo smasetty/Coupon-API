@@ -15,7 +15,6 @@ function disconnectMongoose(err) {
     mongoose.connection.close();
 }
 
-
 User.find({email: config.emailFromAddress}, function(err, admins){
     if (err) {
         console.log(err);

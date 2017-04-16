@@ -39,7 +39,8 @@ router.param('phone', function(req, res, next, phone) {
 });
 
 router.route('/users')
-    .get(auth.superAdminRequired, users.getUsers)
+    //.get(auth.superAdminRequired, users.getUsers)
+    .get(users.getUsers)
     .post(users.createUser);
 router.route('/users/:id')
     .get(auth.superAdminRequired, users.getUserByID)
@@ -67,7 +68,6 @@ router.route('/auth/token')
 
 app.use('/', router);
 
-//handle 404
 app.use(function(req, res, next){
   var err = new Error('Not Found');
   err.status = 404;

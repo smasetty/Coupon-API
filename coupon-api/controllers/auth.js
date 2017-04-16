@@ -11,13 +11,18 @@ module.exports.loginUser = function(req, res, next) {
     User.findOne({email: req.body.email}, function(err, user){
         if (err) return next(err);
         if (!user) return res.status(400).send('No User with that Email');
-        if (!user.isAdmin && !user.isSuperAdmin)
+        if (!user.isAdmin && !user.isSuperAdmin) {
+            console.log('There is no admin')
             return res.status(403).send('No admin with that email');
+        }
+
 
         user.comparePassword(req.body.password, function(err, isMatch){
             if (err) return next(err);
-            if  (!isMatch) 
+            if  (!isMatch)  {
+                console.log('No password Match');
                 return res.status(401).send('Incorrect Password');
+            }
 
             var payload = {
                 id: user._id,

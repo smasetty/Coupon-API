@@ -1,10 +1,11 @@
 module.exports = {
   port: 3001,
 
-  apiUrl: 'http://localhost:3000',
+  apiUrl: 'http://192.168.1.140:3005',
   
   // secret for creating tokens
-  secret: 'reughdjfbxmdgvhbgakbhjsadf',
+  //secret: 'reughdjfbxmdgvhbgakbhjsadf',
+  secret: 'ThisIsDefinetlyNotTheSecret',
     
   // list of providers
   providers: [
